@@ -23,6 +23,11 @@ class MainActivity : AppCompatActivity(), FullCallback {
             reqStoragePermission()
         }
 
+        ZipBuilderN.Builder()
+            .getContext(this)
+            .getPath("PATH")
+            .getName("Name")
+            .build()
         //getInputs()
         //File("PATH").listFiles()
 
