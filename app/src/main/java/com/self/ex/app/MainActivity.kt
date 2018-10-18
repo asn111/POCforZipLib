@@ -1,8 +1,9 @@
-package com.self.ex.myapplication
+package com.self.ex.app
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import com.self.ex.myapplication.R
 import com.zubair.permissionmanager.PermissionManager
 import com.zubair.permissionmanager.PermissionUtils
 import com.zubair.permissionmanager.enums.PermissionEnum
@@ -22,22 +23,20 @@ class MainActivity : AppCompatActivity(), FullCallback {
             reqStoragePermission()
         }
 
-        getInputs()
-
-
-        File("PATH").listFiles()
+        //getInputs()
+        //File("PATH").listFiles()
 
     }
 
-    fun getInputs(): ZipFileBulder{
-        val zip = ZipFileBulder()
-            .getContext(this)
-            .getPath("Path to directory")
-            .getName("Zip Name")
-            .build()
-
-        return zip
-    }
+//    fun getInputs(): ZipFileBulder {
+//        val zip = ZipFileBulder()
+//            .getContext(this)
+//            .getPath("Path to directory")
+//            .getName("Zip Name")
+//            .build()
+//
+//        return zip
+//    }
 
 
        fun reqStoragePermission() {

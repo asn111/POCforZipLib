@@ -1,4 +1,4 @@
-package com.self.ex.myapplication
+package com.self.ex.app
 
 import android.util.Log
 import io.reactivex.Observable
