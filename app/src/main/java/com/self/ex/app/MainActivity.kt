@@ -16,8 +16,9 @@ class MainActivity : AppCompatActivity(), FullCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        val path = filesDir.absolutePath
         if (isStoragePermissionGranted()) {
+
 
         } else {
             reqStoragePermission()
@@ -25,23 +26,10 @@ class MainActivity : AppCompatActivity(), FullCallback {
 
         ZipBuilderN.Builder()
             .getContext(this)
-            .getPath("PATH")
+            .getPath(path)
             .getName("Name")
             .build()
-        //getInputs()
-        //File("PATH").listFiles()
-
     }
-
-//    fun getInputs(): ZipFileBulder {
-//        val zip = ZipFileBulder()
-//            .getContext(this)
-//            .getPath("Path to directory")
-//            .getName("Zip Name")
-//            .build()
-//
-//        return zip
-//    }
 
 
        fun reqStoragePermission() {
