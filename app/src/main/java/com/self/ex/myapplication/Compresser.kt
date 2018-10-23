@@ -10,7 +10,7 @@ import java.util.zip.ZipOutputStream
 private const val TAG = "Compress"
 private const val BUFFER_SIZE = 2048
 
-fun zip(filesToSend: List<File>, outputPath: String): Observable<Boolean> {
+fun zip(filesToSend: List<File>, outputPath: String): Observable<String> {
 
     return Observable.create {
 
@@ -30,7 +30,7 @@ fun zip(filesToSend: List<File>, outputPath: String): Observable<Boolean> {
             e.printStackTrace()
         }
 
-        it.onNext(true)
+        it.onNext(outputPath)
         it.onComplete()
     }
 }

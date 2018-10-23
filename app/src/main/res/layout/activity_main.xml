@@ -16,11 +16,18 @@
             tools:layout_editor_absoluteX="65dp"
             android:id="@+id/open_storage"/>
     <Button
-            android:text="Make Zip"
+            android:text="Make Zip for All Files"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteY="138dp"
             tools:layout_editor_absoluteX="230dp"
-            android:id="@+id/make_zip"/>
+            android:id="@+id/make_zip_all"/>
+<Button
+            android:text="Make Zip for Selected Files"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteY="138dp"
+            tools:layout_editor_absoluteX="230dp"
+            android:id="@+id/make_zip_selected"/>
 
 </LinearLayout>
