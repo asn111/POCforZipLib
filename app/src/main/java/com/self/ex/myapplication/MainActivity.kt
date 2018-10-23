@@ -2,14 +2,21 @@ package com.self.ex.myapplication
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.app.AlertDialog
 import com.zubair.permissionmanager.PermissionManager
 import com.zubair.permissionmanager.PermissionUtils
 import com.zubair.permissionmanager.enums.PermissionEnum
 import com.zubair.permissionmanager.interfaces.FullCallback
+import io.reactivex.rxkotlin.subscribeBy
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 class MainActivity : AppCompatActivity(), FullCallback {
+
+    var REQUEST_CHOOSER = 1234
+    val oPath = Environment.getExternalStorageDirectory().absolutePath
+    val pathO ="/storage/self/primary/Documents/name/Faisal IOS October 2018.docx"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +29,18 @@ class MainActivity : AppCompatActivity(), FullCallback {
             reqStoragePermission()
         }
 
-        getInputs()
+       open_storage.setOnClickListener{
 
+       }
 
-        File("PATH").listFiles()
+    }
 
+    fun zipAll(){
+        val zip = com.self.ex.myapplication.zipAll("","")
+        zip.subscribeBy(onNext = { println(it) },
+            onError =  { it.printStackTrace() },
+            onComplete = { println("Done!") }
+        )
     }
 
     fun getInputs(): ZipFileBulder{
