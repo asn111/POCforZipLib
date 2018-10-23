@@ -2,32 +2,22 @@ package com.self.ex.app
 
 import android.app.Activity
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
 import com.self.ex.myapplication.R
 import com.zubair.permissionmanager.PermissionManager
 import com.zubair.permissionmanager.PermissionUtils
 import com.zubair.permissionmanager.enums.PermissionEnum
 import com.zubair.permissionmanager.interfaces.FullCallback
-import kotlinx.android.synthetic.main.activity_main.*
-import java.io.*
-import java.lang.Exception
-import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.internal.operators.flowable.FlowableFromIterable.subscribe
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.rxkotlin.toObservable
-import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Subscriber
+import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 import java.net.URISyntaxException
 
 
@@ -38,8 +28,8 @@ class MainActivity : AppCompatActivity(), FullCallback {
     var file: String = "logFile"
     lateinit var filee: File
     var REQUEST_CHOOSER = 1234
-    val oPath = Environment.getExternalStorageDirectory().absolutePath
-    val pathO ="/storage/self/primary/Documents/name/Faisal IOS October 2018.docx"
+    val oPath = Environment.getExternalStorageDirectory().path+File.separator+"Documents/name"+File.separator+"myZip.zip"
+    val pathO = Environment.getExternalStorageDirectory().path+File.separator+"Documents"
 
 
     var newFile: File? = null
@@ -56,10 +46,6 @@ class MainActivity : AppCompatActivity(), FullCallback {
 
         btn_open_strg.setOnClickListener {
 
-           // Log.v("MAIN ACTIVITY", "Btn Clicked")
-
-
-            //zip(listOf(filee),oPath)
             observe()
 
         }
@@ -68,13 +54,22 @@ class MainActivity : AppCompatActivity(), FullCallback {
     }
     fun observe () {
 
-        val zip = zip(listOf(filee),pathO)
+        val zip = zip(listOf(filee),oPath)
 
         zip.subscribeBy(onNext = { println(it) },
                 onError =  { it.printStackTrace() },
                 onComplete = { println("Done!") }
             )
 
+    }
+
+    fun observer2() {
+
+        val zip = zipAll(pathO,oPath)
+        zip.subscribeBy(onNext = { println(it) },
+            onError =  { it.printStackTrace() },
+            onComplete = { println("Done!") }
+        )
     }
 
 
@@ -100,9 +95,9 @@ class MainActivity : AppCompatActivity(), FullCallback {
         when (requestCode) {
             REQUEST_CHOOSER -> if (resultCode == Activity.RESULT_OK) {
                 val uri = data!!.data
-                Log.d("TAGG@", "File Uri: " + uri!!.toString())
+                Log.i("TAGG@", "File Uri: " + uri!!.toString())
                 val path = getPath(this, uri)
-                Log.d("TAGG", "File Path: $path")
+                Log.i("TAGG", "File Path: $path")
 
                 filee = File(path)
 
@@ -135,17 +130,22 @@ class MainActivity : AppCompatActivity(), FullCallback {
         return null
     }
 
-    fun builder(context: Context) {
+    fun builder() {
 
-        val path = "/storage/self/primary/Documents/name/Faisal IOS October 2018.docx"
 
-        ZipBuilderN.Builder()
-            .getContext(context)
-            .getPath(path)
-            .getName("Name")
+        val zipBuilder = ZipBuilderN.Builder()
+            .getFile(listOf(filee))
+            .getOutputPath(oPath)
+            .getName("myZip2.zip")
             .build()
 
-        zip(listOf(newFile!!), path)
+
+//        ZipBuilderN.Builder()
+//            .getContext(context)
+//            .getPath(path)
+//            .getName("Name")
+//            .build()
+
     }
 
     fun reqStoragePermission() {

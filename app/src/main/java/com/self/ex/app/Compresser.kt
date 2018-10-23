@@ -10,7 +10,7 @@ import java.util.zip.ZipOutputStream
 private const val TAG = "Compress"
 private const val BUFFER_SIZE = 2048
 
-fun zip(filesToSend: List<File>, outputPath: String): Observable<Boolean> {
+fun zip(filesToSend: List<File>, outputPath: String): Observable<String> {
 
     return Observable.create {
 
@@ -30,18 +30,18 @@ fun zip(filesToSend: List<File>, outputPath: String): Observable<Boolean> {
             e.printStackTrace()
         }
 
-        it.onNext(true)
+        it.onNext(outputPath)
         it.onComplete()
     }
 }
 
-fun zipAll(directory: String, zipFile: String): Observable<Boolean> {
+fun zipAll(directory: String, outputPath: String): Observable<Boolean> {
     val sourceFile = File(directory)
 
     return Observable.create {
         val emitter = it
 
-        ZipOutputStream(BufferedOutputStream(FileOutputStream(zipFile))).use {
+        ZipOutputStream(BufferedOutputStream(FileOutputStream(outputPath))).use {
             it.use {
                 zipFiles(it, sourceFile, "")
 
@@ -109,7 +109,6 @@ private fun writeToZip(f: File, zos: ZipOutputStream, zipEntry: ZipEntry) {
             try {
                 zos.putNextEntry(zipEntry)
             } catch (e: ZipException) {
-
                 Log.e(TAG, e.message)
             }
 
@@ -126,9 +125,7 @@ private fun writeToZip(f: File, zos: ZipOutputStream, zipEntry: ZipEntry) {
                 try {
                     zos.write(data, 0, readBytes)
                 } catch (e: ZipException) {
-
                     Log.e(TAG, e.message)
-
                 }
             }
         }
